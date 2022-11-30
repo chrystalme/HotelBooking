@@ -3,8 +3,7 @@ import Hotel from '../models/Hotel.js';
 
 const router = express.Router();
 
-//Create a new hotel same as POST /api/hotels
-
+// Create a new hotel same as POST /api/hotels
 router.post('/', async (req, res) => {
   const newHotel = new Hotel(req.body);
   try {
@@ -15,7 +14,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-//Update a hotel same as PUT /api/hotels/:id
+// Update a hotel same as PUT /api/hotels/:id
 router.put('/:id', async (req, res) => {
   try {
     const updatedHotel = await Hotel.findByIdAndUpdate(
@@ -42,8 +41,23 @@ router.delete('/:id', async (req, res) => {
 });
 
 // Get all hotels same as GET /api/hotels == GET ALL
+router.get('/', async (req, res, next) => {
+  try {
+    const hotels = await Hotel.find();
+    res.status(200).json(hotels);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // Get hotel by id same as GET /api/hotels/:id == SHOW
-
+router.get('/:id', async (req, res) => {
+  try {
+    const hotel = await Hotel.findById(req.params.id);
+    res.json(hotel).status(200);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 export default router;
 // module.exports = router;
