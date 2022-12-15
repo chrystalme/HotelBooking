@@ -1,6 +1,7 @@
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import { createError } from '../utils/error.js';
+import jwt from 'jsonwebtoken';
 
 export const registerUser = async (req, res, next) => {
   try {
@@ -27,10 +28,18 @@ export const loginUser = async (req, res, next) => {
       req.body.password,
       user.password
     );
+    // to get a random key for token, use $openssl rand -base64 32
+    const token = jwt.sign(
+      { id: user._id, isAdmin: user.isAdmin },
+      process.env.JWT
+    );
     if (!isPasswordCorrect)
       return next(createError(400, 'Invalid Credentials'));
     const { password, isAdmin, ...otherDetails } = user._doc;
-    res.status(200).json({ ...otherDetails });
+    res
+      .cookie('access_token', token, { httpOnly: true })
+      .status(200)
+      .json({ ...otherDetails });
   } catch (error) {
     next(error);
   }
