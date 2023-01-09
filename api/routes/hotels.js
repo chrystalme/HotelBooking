@@ -6,17 +6,18 @@ import {
   getHotels,
   updateHotel,
 } from '../controllers/hotelsController.js';
+import { verifyAdmin } from '../utils/verifyToken.js';
 
 const router = express.Router();
 
 // Create a new hotel same as POST /api/hotels
-router.post('/', createHotel);
+router.post('/', verifyAdmin, createHotel);
 
 // Update a hotel same as PUT /api/hotels/:id
-router.put('/:id', updateHotel);
+router.put('/:id', verifyAdmin, updateHotel);
 
 // Delete a hotel same as DELETE /api/hotels/:id
-router.delete('/:id', deleteHotel);
+router.delete('/:id', verifyAdmin, deleteHotel);
 
 // Get all hotels same as GET /api/hotels == GET ALL
 router.get('/', getHotels);

@@ -21,7 +21,7 @@ export const updateHotel = async (req, res, next) => {
     );
     res.send(updatedHotel).status(200);
   } catch (error) {
-    res.status(500).json(error);
+    next(error);
   }
 };
 
@@ -30,7 +30,7 @@ export const deleteHotel = async (req, res, next) => {
     await Hotel.findByIdAndDelete(req.params.id);
     res.status(200).json('Hotel has been deleted');
   } catch (error) {
-    res.status(500).json(error);
+    next(error);
   }
 };
 
@@ -39,7 +39,7 @@ export const getHotel = async (req, res, next) => {
     const hotel = await Hotel.findById(req.params.id);
     res.json(hotel).status(200);
   } catch (error) {
-    res.status(500).json(error);
+    next(error);
   }
 };
 
@@ -47,7 +47,7 @@ export const getHotels = async (req, res, next) => {
   try {
     const hotels = await Hotel.find();
     res.status(200).json(hotels);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
