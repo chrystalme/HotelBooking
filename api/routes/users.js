@@ -5,14 +5,15 @@ import {
   getUser,
   getUsers,
 } from '../controllers/usersController.js';
+import { verifyToken, verifyUser } from '../utils/verifyToken.js';
 
 const router = express.Router();
 
-router.get('/checkauthentication', (req, res, next) => {
+router.get('/checkauthentication', verifyToken, (req, res, next) => {
   res.send('Hello User, You are logged in');
 });
 
-router.get('/checkuser/:id', (req, res, next) => {
+router.get('/checkuser/:id', verifyUser, (req, res, next) => {
   res.send('Hello User, You are logged in and can delete your account');
 });
 
