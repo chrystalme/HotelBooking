@@ -8,6 +8,14 @@ import {
 
 const router = express.Router();
 
+router.get('/checkauthentication', (req, res, next) => {
+  res.send('Hello User, You are logged in');
+});
+
+router.get('/checkuser/:id', (req, res, next) => {
+  res.send('Hello User, You are logged in and can delete your account');
+});
+
 // Update a user same as PUT /api/users/:id
 router.put('/:id', updateUser);
 
