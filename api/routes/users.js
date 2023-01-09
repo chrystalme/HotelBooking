@@ -18,7 +18,7 @@ router.get('/checkuser/:id', verifyUser, (req, res, next) => {
 });
 
 router.get('/checkadmin/:id', verifyAdmin, (req, res, next) => {
-  res.send('Hello User, You are logged in and can delete your account');
+  res.send('Hello Admin, You are logged in and can delete all account');
 });
 
 // Update a user same as PUT /api/users/:id
