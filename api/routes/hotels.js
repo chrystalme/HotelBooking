@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   countByCity,
+  countByType,
   createHotel,
   deleteHotel,
   getHotel,
@@ -30,6 +31,6 @@ router.get('/find/:id', getHotel);
 router.get('/countByCity', countByCity);
 
 // Get hotel by id same as GET /api/hotels/:id == SHOW
-router.get('/countByType');
+router.get('/countByType', countByType);
 export default router;
 // module.exports = router;
