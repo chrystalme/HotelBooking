@@ -51,3 +51,50 @@ export const getHotels = async (req, res, next) => {
     next(err);
   }
 };
+// ? Count bY City
+// !
+// TODO use query string in the url
+export const countByCity = async (req, res, next) => {
+  const cities = req.query.cities.split(',');
+  try {
+    const list = await Promise.all(
+      cities.map(city => {
+        return Hotel.countDocuments({ city: city });
+        // return Hotel.countDocuments({ city: { $in: city } });
+      })
+    );
+    res.status(200).json(list);
+  } catch (err) {
+    next(err);
+  }
+
+  // const { cities } = req.query;
+  // if (!cities) {
+  //   return res.status(400).json({
+  //     success: false,
+  //     message: 'Please provide a city or cities in the query.',
+  //   });
+  // }
+  // const citiesArr = cities.split(',');
+  // Hotel.countDocuments({ city: { $in: citiesArr } }, (err, count) => {
+  //   if (err) {
+  //     return res.status(500).json({
+  //       success: false,
+  //       message: 'An error occurred. Please try again later.',
+  //     });
+  //   }
+  //   return res.json({
+  //     success: true,
+  //     count,
+  //   });
+  // });
+};
+
+// export const getHotels = async (req, res, next) => {
+//   try {
+//     const hotels = await Hotel.find();
+//     res.status(200).json(hotels);
+//   } catch (err) {
+//     next(err);
+//   }
+// };
