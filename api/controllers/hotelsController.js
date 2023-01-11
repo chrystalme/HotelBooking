@@ -90,11 +90,11 @@ export const countByCity = async (req, res, next) => {
   // });
 };
 
-// export const getHotels = async (req, res, next) => {
-//   try {
-//     const hotels = await Hotel.find();
-//     res.status(200).json(hotels);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+export const countByType = async (req, res, next) => {
+  try {
+    const hotels = await Hotel.find();
+    res.status(200).json(hotels);
+  } catch (err) {
+    next(err);
+  }
+};
