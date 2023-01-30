@@ -67,37 +67,16 @@ export const countByCity = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-
-  // const { cities } = req.query;
-  // if (!cities) {
-  //   return res.status(400).json({
-  //     success: false,
-  //     message: 'Please provide a city or cities in the query.',
-  //   });
-  // }
-  // const citiesArr = cities.split(',');
-  // Hotel.countDocuments({ city: { $in: citiesArr } }, (err, count) => {
-  //   if (err) {
-  //     return res.status(500).json({
-  //       success: false,
-  //       message: 'An error occurred. Please try again later.',
-  //     });
-  //   }
-  //   return res.json({
-  //     success: true,
-  //     count,
-  //   });
-  // });
 };
 
 export const countByType = async (req, res, next) => {
   try {
-    const hotelCount = await Hotel.countDocuments({ type: 'Hotel' });
+    const hotelCount = await Hotel.countDocuments({ type: 'hotel' });
     const apartmentCount = await Hotel.countDocuments({ type: 'Apartment' });
     const resortCount = await Hotel.countDocuments({ type: 'Resort' });
     const villaCount = await Hotel.countDocuments({ type: 'Villa' });
     const cabinCount = await Hotel.countDocuments({ type: 'Cabin' });
-    res.status(200).json([
+    const data = [
       {
         type: 'hotel',
         count: hotelCount,
@@ -118,7 +97,8 @@ export const countByType = async (req, res, next) => {
         type: 'cabin',
         count: cabinCount,
       },
-    ]);
+    ];
+    res.status(200).json(data);
   } catch (err) {
     next(err);
   }
